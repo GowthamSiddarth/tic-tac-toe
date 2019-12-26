@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "backend server for tic-tac-toe multiplayer",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GowthamSiddarth/tic-tac-toe.git"
+  },
+  "keywords": [
+    "mern",
+    "tic-tac-toe",
+    "node",
+    "npm",
+    "multiplayer"
+  ],
+  "author": "Gowtham Behara",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GowthamSiddarth/tic-tac-toe/issues"
+  },
+  "homepage": "https://github.com/GowthamSiddarth/tic-tac-toe#readme"
+}
