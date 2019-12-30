@@ -1,19 +1,27 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+
+import { Container, Row, Col, Button } from "react-bootstrap";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <Container>
+          <Row>
+            <Col>
+              <Button variant="primary" size="lg">
+                Play Game
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      </header>
+    </div>
+  );
 }
+
 
 export default App;
