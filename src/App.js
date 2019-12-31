@@ -10,6 +10,7 @@ import store from './redux/store';
 import { Container, Row, Col } from "react-bootstrap";
 
 import Landing from "./components/Landing";
+import CreateGameRoom from "./components/CreateGameRoom";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
               <Row>
                 <Col>
                   <Route exact path="/" component={Landing} />
+                  <Route exact path="/create-game-room" component={CreateGameRoom} />
                 </Col>
               </Row>
             </Container>
