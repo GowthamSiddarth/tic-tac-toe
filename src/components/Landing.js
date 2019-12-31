@@ -46,7 +46,10 @@ function PlayerNamePrompt(props) {
 function Landing(props) {
     const [modalShow, setModalShow] = useState(false);
 
-    const handleSubmit = playerName => props.createPlayer(playerName);
+    const handleSubmit = playerName => {
+        props.createPlayer(playerName);
+        props.history.push('/create-game-room');
+    };
 
     return (
         <div>
