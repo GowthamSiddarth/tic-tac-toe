@@ -12,7 +12,10 @@ import { createGameRoom } from "../redux/actions/playerActions";
 
 function CreateGameRoom(props) {
 
-    const createGameRoom = event => props.createGameRoom(qs.stringify({ playerId: props.player.playerId }));
+    const createGameRoom = async () => {
+        await props.createGameRoom(qs.stringify({ playerId: props.player.playerId }));
+        props.history.push('/start-new-game');
+    }
 
     return (
         <div>
