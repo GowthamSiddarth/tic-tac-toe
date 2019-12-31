@@ -1,7 +1,8 @@
-import { CREATE_PLAYER } from "../actions/types";
+import { CREATE_PLAYER, CREATE_GAME_ROOM } from "../actions/types";
 
 const initState = {
-    playerId: undefined
+    playerId: undefined,
+    gameRoomId: undefined
 };
 
 export default function (state = initState, action) {
@@ -11,6 +12,12 @@ export default function (state = initState, action) {
                 ...state,
                 playerId: action.payload
             };
+
+        case CREATE_GAME_ROOM:
+            return {
+                ...state,
+                gameRoomId: action.payload
+            }
 
         default:
             return state;
