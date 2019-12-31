@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { withRouter } from "react-router-dom";
+
 import { Button, Modal, FormControl } from 'react-bootstrap';
+
+import { createPlayer } from "../redux/actions/playerActions";
 
 function PlayerNamePrompt(props) {
 
     const [playerName, setPlayerName] = useState("");
 
-    const onSubmit = () => props.onSubmit(playerName); 
+    const onSubmit = () => props.onSubmit(playerName);
 
     return (
         <Modal
@@ -55,4 +62,17 @@ function Landing() {
     );
 }
 
-export default Landing;
+Landing.propTypes = {
+    createPlayer: PropTypes.func.isRequired,
+    player: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    player: state.player
+});
+
+const mapDispatchToProps = dispatch => ({
+    createPlayer: bindActionCreators(createPlayer, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Landing));
