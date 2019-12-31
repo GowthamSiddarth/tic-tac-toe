@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withRouter } from "react-router-dom";
 
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 
-import { createGameRoom } from "../redux/actions/playerActions";
+import { createGameRoom, joinGameRoom } from "../redux/actions/playerActions";
 
 function CreateOrJoinGameRoom(props) {
 
@@ -17,18 +17,35 @@ function CreateOrJoinGameRoom(props) {
         props.history.push('/start-new-game');
     }
 
+    const joinGameRoom = async () => {
+        const respBody = await props.joinGameRoom(qs.stringify({ gameRoomId: props.player.gameRoomId, playerId: props.player.playerId }));
+        console.log(respBody);
+    }
+
     return (
-        <div>
-            <Button variant="primary" size="lg" onClick={createGameRoom}>
-                Create Room
-            </Button>
+        <div id="create-join-game-room">
+            <Row className="py-2">
+                <Col>
+                    <Button variant="primary" size="lg" onClick={createGameRoom}>
+                        Create Room
+                    </Button>
+                </Col>
+            </Row>
+            <Row className="py-2">
+                <Col>
+                    <Button variant="success" size="lg" onClick={joinGameRoom}>
+                        Join Room
+                    </Button>
+                </Col>
+            </Row>
         </div>
     );
 }
 
 CreateOrJoinGameRoom.propTypes = {
     createGameRoom: PropTypes.func.isRequired,
-    player: PropTypes.object.isRequired
+    joinGameRoom: PropTypes.func.isRequired,
+    player: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -36,7 +53,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    createGameRoom: bindActionCreators(createGameRoom, dispatch)
+    createGameRoom: bindActionCreators(createGameRoom, dispatch),
+    joinGameRoom: bindActionCreators(joinGameRoom, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateOrJoinGameRoom));
