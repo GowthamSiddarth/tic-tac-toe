@@ -10,7 +10,7 @@ import { Button } from "react-bootstrap";
 
 import { createGameRoom } from "../redux/actions/playerActions";
 
-function CreateGameRoom(props) {
+function CreateOrJoinGameRoom(props) {
 
     const createGameRoom = async () => {
         await props.createGameRoom(qs.stringify({ playerId: props.player.playerId }));
@@ -26,7 +26,7 @@ function CreateGameRoom(props) {
     );
 }
 
-CreateGameRoom.propTypes = {
+CreateOrJoinGameRoom.propTypes = {
     createGameRoom: PropTypes.func.isRequired,
     player: PropTypes.object.isRequired
 };
@@ -39,4 +39,4 @@ const mapDispatchToProps = dispatch => ({
     createGameRoom: bindActionCreators(createGameRoom, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateGameRoom));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateOrJoinGameRoom));
