@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import qs from "qs";
 
 import PropTypes from "prop-types";
@@ -10,15 +10,19 @@ import { Button, Row, Col } from "react-bootstrap";
 
 import { createGameRoom, joinGameRoom } from "../redux/actions/playerActions";
 
+import PromptDialog from "./PromptDialog";
+
 function CreateOrJoinGameRoom(props) {
+
+    const [promptInput, setPromptInput] = useState(false);
 
     const createGameRoom = async () => {
         await props.createGameRoom(qs.stringify({ playerId: props.player.playerId }));
         props.history.push('/start-new-game');
     }
 
-    const joinGameRoom = async () => {
-        const respBody = await props.joinGameRoom(qs.stringify({ gameRoomId: props.player.gameRoomId, playerId: props.player.playerId }));
+    const joinGameRoom = async (gameRoomId) => {
+        const respBody = await props.joinGameRoom(qs.stringify({ gameRoomId: gameRoomId, playerId: props.player.playerId }));
         console.log(respBody);
     }
 
@@ -33,9 +37,16 @@ function CreateOrJoinGameRoom(props) {
             </Row>
             <Row className="py-2">
                 <Col>
-                    <Button variant="success" size="lg" onClick={joinGameRoom}>
+                    <Button variant="success" size="lg" onClick={() => setPromptInput(true)}>
                         Join Room
                     </Button>
+                    <PromptDialog
+                        show={promptInput}
+                        title="Enter Room ID"
+                        placeholder="Room ID"
+                        onSubmit={joinGameRoom}
+                        onHide={() => setPromptInput(false)}
+                    />
                 </Col>
             </Row>
         </div>

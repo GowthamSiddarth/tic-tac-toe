@@ -5,46 +5,14 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withRouter } from "react-router-dom";
 
-import { Button, Modal, FormControl } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 import { createPlayer } from "../redux/actions/playerActions";
 
-function PlayerNamePrompt(props) {
-
-    const [playerName, setPlayerName] = useState("");
-
-    const onSubmit = () => props.onSubmit(playerName);
-
-    return (
-        <Modal
-            {...props}
-            size="md"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    Enter Your Name
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <FormControl
-                    placeholder="Player Name"
-                    aria-label="playerName"
-                    value={playerName}
-                    onChange={e => setPlayerName(e.target.value)}
-                />
-            </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={props.onHide}>Close</Button>
-                <Button onClick={onSubmit}>Save</Button>
-            </Modal.Footer>
-        </Modal>
-    );
-}
+import PromptDialog from "./PromptDialog";
 
 function Landing(props) {
-    const [modalShow, setModalShow] = useState(false);
+    const [promptInput, setPromptInput] = useState(false);
 
     const handleSubmit = async playerName => {
         await props.createPlayer(playerName);
@@ -53,13 +21,15 @@ function Landing(props) {
 
     return (
         <div>
-            <Button variant="primary" size="lg" onClick={() => setModalShow(true)}>
+            <Button variant="primary" size="lg" onClick={() => setPromptInput(true)}>
                 Play Game
             </Button>
-            <PlayerNamePrompt
-                show={modalShow}
+            <PromptDialog
+                show={promptInput}
+                title="Enter Your Name"
+                placeholder="Player Name"
                 onSubmit={handleSubmit}
-                onHide={() => setModalShow(false)}
+                onHide={() => setPromptInput(false)}
             />
         </div>
     );
