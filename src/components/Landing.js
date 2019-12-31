@@ -43,10 +43,10 @@ function PlayerNamePrompt(props) {
     );
 }
 
-function Landing() {
+function Landing(props) {
     const [modalShow, setModalShow] = useState(false);
 
-    const handleSubmit = playerName => console.log(playerName);
+    const handleSubmit = playerName => props.createPlayer(playerName);
 
     return (
         <div>
