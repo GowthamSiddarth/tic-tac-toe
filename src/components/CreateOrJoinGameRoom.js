@@ -14,10 +14,11 @@ import PromptDialog from "./PromptDialog";
 
 function CreateOrJoinGameRoom(props) {
 
-    const [promptInput, setPromptInput] = useState(false);
+    const [promptRoomName, setPromptRoomName] = useState(false);
+    const [promptRoomId, setPromptRoomId] = useState(false);
 
-    const createGameRoom = async () => {
-        await props.createGameRoom(qs.stringify({ playerId: props.player.playerId }));
+    const createGameRoom = async (gameRoomName) => {
+        await props.createGameRoom(qs.stringify({ playerId: props.player.playerId, gameRoomName: gameRoomName }));
         props.history.push('/start-new-game');
     }
 
@@ -30,22 +31,29 @@ function CreateOrJoinGameRoom(props) {
         <div id="create-join-game-room">
             <Row className="py-2">
                 <Col>
-                    <Button variant="primary" size="lg" onClick={createGameRoom}>
+                    <Button variant="primary" size="lg" onClick={() => setPromptRoomName(true)}>
                         Create Room
                     </Button>
+                    <PromptDialog
+                        show={promptRoomName}
+                        title="Enter Room Name"
+                        placeholder="Room Name"
+                        onSubmit={createGameRoom}
+                        onHide={() => setPromptRoomName(false)}
+                    />
                 </Col>
             </Row>
             <Row className="py-2">
                 <Col>
-                    <Button variant="success" size="lg" onClick={() => setPromptInput(true)}>
+                    <Button variant="success" size="lg" onClick={() => setPromptRoomId(true)}>
                         Join Room
                     </Button>
                     <PromptDialog
-                        show={promptInput}
+                        show={promptRoomId}
                         title="Enter Room ID"
                         placeholder="Room ID"
                         onSubmit={joinGameRoom}
-                        onHide={() => setPromptInput(false)}
+                        onHide={() => setPromptRoomId(false)}
                     />
                 </Col>
             </Row>
