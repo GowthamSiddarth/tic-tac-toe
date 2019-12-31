@@ -15,13 +15,15 @@ export const createPlayer = (playerName) => dispatch => {
 
 export const createGameRoom = (reqBody) => dispatch => {
     axios.post('/api/v1/v0/create-game-room', reqBody)
-        .then(resp => dispatch({
-            type: CREATE_GAME_ROOM,
-            payload: resp.data.message.game_room_id
-        }))
+        .then(resp =>
+            dispatch({
+                type: CREATE_GAME_ROOM,
+                payload: resp.data.message.game_room_id
+            })
+        )
         .catch(err => dispatch({
             type: ERROR,
-            payload: err.response.data
+            payload: err.response.data.message
         }));
 };
 
