@@ -9,7 +9,7 @@ import { Button } from 'react-bootstrap';
 
 import { createPlayer } from "../redux/actions/playerActions";
 
-import PromptDialog from "./PromptDialog";
+import PromptDialog from "./dialogs/PromptDialog";
 
 function Landing(props) {
     const [promptInput, setPromptInput] = useState(false);

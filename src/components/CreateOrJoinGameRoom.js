@@ -10,16 +10,19 @@ import { Button, Row, Col } from "react-bootstrap";
 
 import { createGameRoom, joinGameRoom } from "../redux/actions/playerActions";
 
-import PromptDialog from "./PromptDialog";
+import PromptDialog from "./dialogs/PromptDialog";
+import MessageDialog from "./dialogs/MessageDialog";
 
 function CreateOrJoinGameRoom(props) {
 
     const [promptRoomName, setPromptRoomName] = useState(false);
     const [promptRoomId, setPromptRoomId] = useState(false);
+    const [showRoomId, setShowRoomId] = useState(false);
 
-    const createGameRoom = async (gameRoomName) => {
+    const createGameRoom = async gameRoomName => {
         await props.createGameRoom(qs.stringify({ playerId: props.player.playerId, gameRoomName: gameRoomName }));
-        props.history.push('/start-new-game');
+        setPromptRoomName(false);
+        setShowRoomId(true);
     }
 
     const joinGameRoom = async (gameRoomId) => {
@@ -54,6 +57,16 @@ function CreateOrJoinGameRoom(props) {
                         placeholder="Room ID"
                         onSubmit={joinGameRoom}
                         onHide={() => setPromptRoomId(false)}
+                    />
+                </Col>
+            </Row>
+            <Row className="py-2">
+                <Col>
+                    <MessageDialog
+                        show={showRoomId}
+                        title="New Room Created"
+                        body={"Share the room ID with your friend: " + props.player.gameRoomId}
+                        onHide={() => setShowRoomId(false)}
                     />
                 </Col>
             </Row>
