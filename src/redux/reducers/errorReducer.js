@@ -1,16 +1,15 @@
 import { ERROR } from "../actions/types";
 
 const initState = {
-    msgFromServer: undefined
+    errorMessage: undefined
 };
 
 export default function (state = initState, action) {
     switch (action.type) {
         case ERROR:
-            console.log(action.payload);
             return {
                 ...state,
-                msgFromServer: action.payload
+                errorMessage: action.payload
             };
 
         default:
