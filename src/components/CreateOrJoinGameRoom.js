@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import qs from "qs";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -27,12 +26,12 @@ function CreateOrJoinGameRoom(props) {
     }, [props.errorMessage, props.gameRoomId, joinRoom]);
 
     const createGameRoom = gameRoomName => {
-        props.createGameRoom(qs.stringify({ playerId: props.playerId, gameRoomName }));
+        props.createGameRoom({ playerId: props.playerId, gameRoomName });
         setPromptRoomName(false);
     }
 
     const joinGameRoom = gameRoomId => {
-        props.joinGameRoom(qs.stringify({ playerId: props.playerId, gameRoomId }))
+        props.joinGameRoom({ playerId: props.playerId, gameRoomId })
             .then(_resp => props.history.push('/start-new-game'))
             .catch(err => console.log(err.message));
         setPromptRoomId(false);

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import qs from "qs";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -21,10 +20,10 @@ function StartNewGame(props) {
         else if (props.errorMessage) setShowErrorMsg(true);
     }, [props.gameId, props.playerSymbol, props.history, props.errorMessage]);
 
-    const startNewGame = () => props.startNewGame(qs.stringify({
+    const startNewGame = () => props.startNewGame({
         playerId: props.playerId,
         gameRoomId: props.gameRoomId
-    }));
+    });
 
 
     const dialogOnHide = (setShowDialog, pathToRedirect) => {

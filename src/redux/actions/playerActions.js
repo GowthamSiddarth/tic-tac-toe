@@ -1,4 +1,6 @@
 import axios from 'axios';
+import qs from "qs";
+
 import { ERROR, CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME, CLEAR_ERROR_MESSAGE, JOIN_GAME_ROOM } from "./types";
 
 export const createPlayer = (playerName) => dispatch => {
@@ -14,7 +16,7 @@ export const createPlayer = (playerName) => dispatch => {
 }
 
 export const createGameRoom = (reqBody) => dispatch => {
-    axios.post('/api/v1/v0/create-game-room', reqBody)
+    axios.post('/api/v1/v0/create-game-room', qs.stringify(reqBody))
         .then(resp =>
             dispatch({
                 type: CREATE_GAME_ROOM,
@@ -29,7 +31,7 @@ export const createGameRoom = (reqBody) => dispatch => {
 
 export const joinGameRoom = (reqBody) => dispatch => {
     return new Promise((resolve, reject) => {
-        axios.post('/api/v1/v0/join-game-room', reqBody)
+        axios.post('/api/v1/v0/join-game-room', qs.stringify(reqBody))
             .then(resp => {
                 dispatch({
                     type: JOIN_GAME_ROOM,
@@ -50,7 +52,7 @@ export const joinGameRoom = (reqBody) => dispatch => {
 };
 
 export const startNewGame = (reqBody) => dispatch => {
-    axios.post('/api/v1/v0/start-new-game', reqBody)
+    axios.post('/api/v1/v0/start-new-game', qs.stringify(reqBody))
         .then(resp => dispatch({
             type: START_NEW_GAME,
             payload: resp.data.message
