@@ -1,8 +1,10 @@
-import { CREATE_PLAYER, CREATE_GAME_ROOM, JOIN_GAME_ROOM } from "../actions/types";
+import { CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME } from "../actions/types";
 
 const initState = {
     playerId: undefined,
-    gameRoomId: undefined
+    gameRoomId: undefined,
+    gameId: undefined,
+    playerSymbol: undefined
 };
 
 export default function (state = initState, action) {
@@ -19,8 +21,12 @@ export default function (state = initState, action) {
                 gameRoomId: action.payload
             }
 
-        case JOIN_GAME_ROOM:
-            return state;
+        case START_NEW_GAME:
+            return {
+                ...state,
+                gameId: action.payload.game_id,
+                playerSymbol: action.payload.player_symbol
+            };
 
         default:
             return state;
