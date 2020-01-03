@@ -17,11 +17,10 @@ function Landing(props) {
     const [showErrorMsg, setShowErrorMsg] = useState(false);
 
     useEffect(() => {
-        if (props.player.playerId)
+        if (props.playerId) {
             props.history.push('/create-game-room');
-        else if (props.error.errorMessage)
-            setShowErrorMsg(true);
-    }, [props.error.errorMessage, props.history, props.player.playerId]);
+        }
+    }, [props.playerId, props.history]);
 
     const handleSubmit = playerName => {
         props.createPlayer(playerName);
@@ -43,7 +42,7 @@ function Landing(props) {
             <MessageDialog
                 show={showErrorMsg}
                 title="Failure"
-                body={props.error.errorMessage}
+                body={props.errorMessage}
                 onHide={() => setShowErrorMsg(false)}
             />
         </div>
@@ -52,14 +51,14 @@ function Landing(props) {
 
 Landing.propTypes = {
     createPlayer: PropTypes.func.isRequired,
-    player: PropTypes.object.isRequired,
-    error: PropTypes.object.isRequired
+    playerId: PropTypes.string,
+    errorMessage: PropTypes.string
 };
 
 const mapStateToProps = state => ({
-    player: state.player,
-    error: state.error
-});
+    playerId: state.player.playerId,
+    errorMessage: state.error.errorMessage
+})
 
 const mapDispatchToProps = dispatch => ({
     createPlayer: bindActionCreators(createPlayer, dispatch)
