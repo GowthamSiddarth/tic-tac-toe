@@ -16,9 +16,9 @@ import StartNewGame from './components/StartNewGame';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Provider store={store}>
+    <Provider store={store}>
+      <div className="App">
+        <header className="App-header">
           <Router>
             <Container>
               <Row>
@@ -30,9 +30,9 @@ function App() {
               </Row>
             </Container>
           </Router>
-        </Provider>
-      </header>
-    </div>
+        </header>
+      </div>
+    </Provider>
   );
 }
 
