@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 
 import { Button } from "react-bootstrap";
 
-import { startNewGame } from "../redux/actions/playerActions";
+import { startNewGame, clearErrorMessage } from "../redux/actions/playerActions";
 
 import MessageDialog from "../components/dialogs/MessageDialog";
 
@@ -22,13 +22,14 @@ function StartNewGame(props) {
     }, [props.gameId, props.playerSymbol, props.history, props.errorMessage]);
 
     const startNewGame = () => props.startNewGame(qs.stringify({
-        playerId: props.player.playerId,
-        gameRoomId: props.player.gameRoomId
+        playerId: props.playerId,
+        gameRoomId: props.gameRoomId
     }));
 
 
     const dialogOnHide = (setShowDialog, pathToRedirect) => {
         setShowDialog(false);
+        props.clearErrorMessage();
         if (pathToRedirect) props.history.push(pathToRedirect);
     }
 
@@ -65,7 +66,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    startNewGame: bindActionCreators(startNewGame, dispatch)
+    startNewGame: bindActionCreators(startNewGame, dispatch),
+    clearErrorMessage: bindActionCreators(clearErrorMessage, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(StartNewGame));

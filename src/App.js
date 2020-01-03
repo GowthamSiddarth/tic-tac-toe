@@ -12,6 +12,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Landing from "./components/Landing";
 import CreateOrJoinGameRoom from "./components/CreateOrJoinGameRoom";
 import StartNewGame from './components/StartNewGame';
+import PlayGame from "./components/PlayGame";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                   <Route exact path="/" component={Landing} />
                   <Route exact path="/create-game-room" component={CreateOrJoinGameRoom} />
                   <Route exact path="/start-new-game" component={StartNewGame} />
+                  <Route exact path="/play-game" component={PlayGame} />
                 </Col>
               </Row>
             </Container>
