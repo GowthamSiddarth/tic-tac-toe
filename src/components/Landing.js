@@ -17,9 +17,7 @@ function Landing(props) {
     const [showErrorMsg, setShowErrorMsg] = useState(false);
 
     useEffect(() => {
-        if (props.playerId) {
-            props.history.push('/create-game-room');
-        }
+        if (props.playerId) props.history.push('/create-game-room');
     }, [props.playerId, props.history]);
 
     const handleSubmit = playerName => {
