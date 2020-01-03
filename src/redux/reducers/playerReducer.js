@@ -1,4 +1,4 @@
-import { CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME } from "../actions/types";
+import { CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME, JOIN_GAME_ROOM } from "../actions/types";
 
 const initState = {
     playerId: undefined,
@@ -16,6 +16,7 @@ export default function (state = initState, action) {
             };
 
         case CREATE_GAME_ROOM:
+        case JOIN_GAME_ROOM:
             return {
                 ...state,
                 gameRoomId: action.payload

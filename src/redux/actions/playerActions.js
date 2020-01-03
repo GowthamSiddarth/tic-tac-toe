@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ERROR, CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME, CLEAR_ERROR_MESSAGE } from "./types";
+import { ERROR, CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME, CLEAR_ERROR_MESSAGE, JOIN_GAME_ROOM } from "./types";
 
 export const createPlayer = (playerName) => dispatch => {
     axios.get('/api/v1/v0/create-player/' + playerName)
@@ -30,7 +30,14 @@ export const createGameRoom = (reqBody) => dispatch => {
 export const joinGameRoom = (reqBody) => dispatch => {
     return new Promise((resolve, reject) => {
         axios.post('/api/v1/v0/join-game-room', reqBody)
-            .then(resp => resolve(resp.data))
+            .then(resp => {
+                dispatch({
+                    type: JOIN_GAME_ROOM,
+                    payload: reqBody.gameRoomId
+                });
+
+                resolve(resp.data);
+            })
             .catch(err => {
                 dispatch({
                     type: ERROR,
