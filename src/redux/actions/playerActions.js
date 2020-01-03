@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ERROR, CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME } from "./types";
+import { ERROR, CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME, CLEAR_ERROR_MESSAGE } from "./types";
 
 export const createPlayer = (playerName) => dispatch => {
     axios.get('/api/v1/v0/create-player/' + playerName)
@@ -50,6 +50,12 @@ export const startNewGame = (reqBody) => dispatch => {
         }))
         .catch(err => dispatch({
             type: ERROR,
-            payload: err.response.data
+            payload: err.response.data.message
         }));
+}
+
+export const clearErrorMessage = () => dispatch => {
+    dispatch({
+        type: CLEAR_ERROR_MESSAGE
+    });
 }
