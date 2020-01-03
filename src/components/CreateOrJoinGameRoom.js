@@ -21,7 +21,6 @@ function CreateOrJoinGameRoom(props) {
     const [showErrorMsg, setShowErrorMsg] = useState(false);
 
     useEffect(() => {
-        console.log(props.gameRoomId);
         if (props.gameRoomId) setShowRoomId(true);
         else if (props.errorMessage) setShowErrorMsg(true);
     }, [props.errorMessage, props.history, props.gameRoomId]);
