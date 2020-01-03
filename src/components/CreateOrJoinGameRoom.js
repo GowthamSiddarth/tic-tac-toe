@@ -35,13 +35,15 @@ function CreateOrJoinGameRoom(props) {
     }
 
     const joinGameRoom = gameRoomId => {
-        props.joinGameRoom(qs.stringify({ gameRoomId: gameRoomId, playerId: props.playerId }));
+        props.joinGameRoom(qs.stringify({ gameRoomId, playerId: props.playerId }))
+            .then(_resp => props.history.push('/start-new-game'))
+            .catch(err => console.log(err.message));
         setPromptRoomId(false);
     }
 
     const dialogOnHide = (setShowDialog, pathToRedirect) => {
         setShowDialog(false);
-        props.history.push(pathToRedirect);
+        if (pathToRedirect) props.history.push(pathToRedirect);
     }
 
     return (
@@ -90,7 +92,7 @@ function CreateOrJoinGameRoom(props) {
                         show={showErrorMsg}
                         title="Failure"
                         body={props.errorMessage}
-                        onHide={() => dialogOnHide(setShowErrorMsg, '/')}
+                        onHide={() => dialogOnHide(setShowErrorMsg, null)}
                     />
                 </Col>
             </Row>
