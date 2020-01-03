@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import qs from "qs";
 
 import PropTypes from "prop-types";
@@ -18,17 +18,30 @@ function CreateOrJoinGameRoom(props) {
     const [promptRoomName, setPromptRoomName] = useState(false);
     const [promptRoomId, setPromptRoomId] = useState(false);
     const [showRoomId, setShowRoomId] = useState(false);
-    const [showMsgFromServer, setShowMsgFromServer] = useState(false);
+    const [showErrorMsg, setShowErrorMsg] = useState(false);
 
-    const createGameRoom = async gameRoomName => {
-        await props.createGameRoom(qs.stringify({ playerId: props.player.playerId, gameRoomName: gameRoomName }));
+    useEffect(() => {
+        console.log(props.gameRoomId);
+        if (props.gameRoomId) {
+            setShowRoomId(true);
+        } else if (props.errorMessage) {
+            setShowErrorMsg(true);
+        }
+    }, [props.errorMessage, props.history, props.gameRoomId]);
+
+    const createGameRoom = gameRoomName => {
+        props.createGameRoom(qs.stringify({ playerId: props.playerId, gameRoomName: gameRoomName }));
         setPromptRoomName(false);
-        props.player.gameRoomId ? setShowRoomId(true) : setShowMsgFromServer(true);
     }
 
-    const joinGameRoom = async (gameRoomId) => {
-        const respBody = await props.joinGameRoom(qs.stringify({ gameRoomId: gameRoomId, playerId: props.player.playerId }));
-        console.log(respBody);
+    const joinGameRoom = gameRoomId => {
+        props.joinGameRoom(qs.stringify({ gameRoomId: gameRoomId, playerId: props.playerId }));
+        setPromptRoomId(false);
+    }
+
+    const dialogOnHide = (setShowDialog, pathToRedirect) => {
+        setShowDialog(false);
+        props.history.push(pathToRedirect);
     }
 
     return (
@@ -66,18 +79,18 @@ function CreateOrJoinGameRoom(props) {
                     <MessageDialog
                         show={showRoomId}
                         title="New Room Created"
-                        body={"Share the room ID with your friend: " + props.player.gameRoomId}
-                        onHide={() => setShowRoomId(false)}
+                        body={"Share the room ID with your friend: " + props.gameRoomId}
+                        onHide={() => dialogOnHide(setShowRoomId, '/start-new-game')}
                     />
                 </Col>
             </Row>
             <Row>
                 <Col>
                     <MessageDialog
-                        show={showMsgFromServer}
-                        title="Message From Server"
-                        body={props.error.msgFromServer}
-                        onHide={() => setShowMsgFromServer(false)}
+                        show={showErrorMsg}
+                        title="Failure"
+                        body={props.errorMessage}
+                        onHide={() => dialogOnHide(setShowErrorMsg, '/')}
                     />
                 </Col>
             </Row>
@@ -88,13 +101,15 @@ function CreateOrJoinGameRoom(props) {
 CreateOrJoinGameRoom.propTypes = {
     createGameRoom: PropTypes.func.isRequired,
     joinGameRoom: PropTypes.func.isRequired,
-    player: PropTypes.object.isRequired,
-    error: PropTypes.object.isRequired
+    playerId: PropTypes.string.isRequired,
+    gameRoomId: PropTypes.string,
+    errorMessage: PropTypes.string
 };
 
 const mapStateToProps = state => ({
-    player: state.player,
-    error: state.error
+    playerId: state.player.playerId,
+    gameRoomId: state.player.gameRoomId,
+    errorMessage: state.error.errorMessage
 });
 
 const mapDispatchToProps = dispatch => ({
