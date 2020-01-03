@@ -19,22 +19,24 @@ function CreateOrJoinGameRoom(props) {
     const [promptRoomId, setPromptRoomId] = useState(false);
     const [showRoomId, setShowRoomId] = useState(false);
     const [showErrorMsg, setShowErrorMsg] = useState(false);
+    const [joinRoom, setJoinRoom] = useState(false);
 
     useEffect(() => {
-        if (props.gameRoomId) setShowRoomId(true);
+        if (props.gameRoomId && !joinRoom) setShowRoomId(true);
         else if (props.errorMessage) setShowErrorMsg(true);
-    }, [props.errorMessage, props.history, props.gameRoomId]);
+    }, [props.errorMessage, props.gameRoomId, joinRoom]);
 
     const createGameRoom = gameRoomName => {
-        props.createGameRoom(qs.stringify({ playerId: props.playerId, gameRoomName: gameRoomName }));
+        props.createGameRoom(qs.stringify({ playerId: props.playerId, gameRoomName }));
         setPromptRoomName(false);
     }
 
     const joinGameRoom = gameRoomId => {
-        props.joinGameRoom(qs.stringify({ gameRoomId, playerId: props.playerId }))
+        props.joinGameRoom(qs.stringify({ playerId: props.playerId, gameRoomId }))
             .then(_resp => props.history.push('/start-new-game'))
             .catch(err => console.log(err.message));
         setPromptRoomId(false);
+        setJoinRoom(true);
     }
 
     const dialogOnHide = (setShowDialog, pathToRedirect) => {
