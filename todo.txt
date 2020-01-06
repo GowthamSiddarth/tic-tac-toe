@@ -1,0 +1,2 @@
+* persist redux state
+* clear error state whenever required
