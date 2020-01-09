@@ -4,7 +4,8 @@ const initState = {
     playerId: undefined,
     gameRoomId: undefined,
     gameId: undefined,
-    playerSymbol: undefined
+    playerSymbol: undefined,
+    myTurn: undefined
 };
 
 export default function (state = initState, action) {
@@ -26,7 +27,8 @@ export default function (state = initState, action) {
             return {
                 ...state,
                 gameId: action.payload.game_id,
-                playerSymbol: action.payload.player_symbol
+                playerSymbol: action.payload.player_symbol,
+                myTurn: 'true' === action.payload.my_turn
             };
 
         default:
