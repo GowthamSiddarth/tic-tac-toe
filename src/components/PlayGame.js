@@ -4,35 +4,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
-function Square(props) {
-    return (
-        <Button block={true} variant="outline-light" size="lg" style={{ height: "68px", width: "68px" }}>X</Button>
-    );
-}
-
-function Board(props) {
-    return (
-        <Container>
-            <Row className="justify-content-md-center no-gutters">
-                <Col md="auto"><Square /></Col>
-                <Col md="auto"><Square /></Col>
-                <Col md="auto"><Square /></Col>
-            </Row>
-            <Row className="justify-content-md-center no-gutters">
-                <Col md="auto"><Square /></Col>
-                <Col md="auto"><Square /></Col>
-                <Col md="auto"><Square /></Col>
-            </Row>
-            <Row className="justify-content-md-center no-gutters">
-                <Col md="auto"><Square /></Col>
-                <Col md="auto"><Square /></Col>
-                <Col md="auto"><Square /></Col>
-            </Row>
-        </Container>
-    );
-}
+import GameBoard from './GameBoard';
 
 function PlayGame(props) {
     const [playerTurnNotification, setPlayerTurnNotification] = useState("Wait for Your Turn");
@@ -47,7 +21,7 @@ function PlayGame(props) {
                 <Col>{playerTurnNotification}</Col>
             </Row>
             <Row>
-                <Col><Board /></Col>
+                <Col><GameBoard /></Col>
             </Row>
         </Container>
     );
