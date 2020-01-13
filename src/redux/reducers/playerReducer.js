@@ -1,4 +1,4 @@
-import { CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME, JOIN_GAME_ROOM } from "../actions/types";
+import { CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME, JOIN_GAME_ROOM, MAKE_A_MOVE, IS_MY_TURN } from "../actions/types";
 
 const initState = {
     playerId: undefined,
@@ -28,6 +28,13 @@ export default function (state = initState, action) {
                 ...state,
                 gameId: action.payload.game_id,
                 playerSymbol: action.payload.player_symbol,
+                myTurn: 'true' === action.payload.my_turn
+            };
+
+        case IS_MY_TURN:
+        case MAKE_A_MOVE:
+            return {
+                ...state,
                 myTurn: 'true' === action.payload.my_turn
             };
 

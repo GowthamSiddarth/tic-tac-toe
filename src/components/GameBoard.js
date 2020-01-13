@@ -15,9 +15,9 @@ function Square(props) {
 
     const onSquareClick = (event) => {
         event.preventDefault();
-        if (props.myTurn) {
+        if (props.myTurn && 0 === buttonText.length) {
             setButtonText("CIRCLE" === props.playerSymbol ? 'O' : 'X');
-            props.makeAMove({ playerId: props.playerId, gameId: props.gameId, row: props.row, col: props.col })
+            props.makeAMove({ playerId: props.playerId, gameRoomId: props.gameRoomId, gameId: props.gameId, row: props.row, col: props.col })
         }
     };
 
@@ -30,19 +30,19 @@ function Board(props) {
     return (
         <Container>
             <Row className="justify-content-md-center no-gutters">
-                <Col md="auto"><Square row={0} col={0} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={0} col={1} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={0} col={2} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameId={props.gameId} /></Col>
+                <Col md="auto"><Square row={0} col={0} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
+                <Col md="auto"><Square row={0} col={1} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
+                <Col md="auto"><Square row={0} col={2} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
             </Row>
             <Row className="justify-content-md-center no-gutters">
-                <Col md="auto"><Square row={1} col={0} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={1} col={1} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={1} col={2} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameId={props.gameId} /></Col>
+                <Col md="auto"><Square row={1} col={0} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
+                <Col md="auto"><Square row={1} col={1} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
+                <Col md="auto"><Square row={1} col={2} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
             </Row>
             <Row className="justify-content-md-center no-gutters">
-                <Col md="auto"><Square row={2} col={0} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={2} col={1} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={2} col={2} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameId={props.gameId} /></Col>
+                <Col md="auto"><Square row={2} col={0} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
+                <Col md="auto"><Square row={2} col={1} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
+                <Col md="auto"><Square row={2} col={2} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
             </Row>
         </Container>
     );
@@ -50,7 +50,7 @@ function Board(props) {
 
 function GameBoard(props) {
     return (
-        <Board myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameId={props.gameId} />
+        <Board myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} />
     );
 }
 

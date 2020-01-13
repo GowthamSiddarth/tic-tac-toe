@@ -64,7 +64,6 @@ export const startNewGame = (reqBody) => dispatch => {
 }
 
 export const makeAMove = (reqBody) => dispatch => {
-    console.log(reqBody);
     axios.post('/api/v1/v0/make-a-move', qs.stringify(reqBody))
         .then(resp => dispatch({
             type: MAKE_A_MOVE,
