@@ -8,7 +8,9 @@ const initState = {
     myTurn: undefined,
     lastMoveSymbol: undefined,
     lastMoveRow: undefined,
-    lastMoveCol: undefined
+    lastMoveCol: undefined,
+    gameStatus: undefined,
+    winner: undefined
 };
 
 export default function (state = initState, action) {
@@ -40,13 +42,17 @@ export default function (state = initState, action) {
                 lastMoveSymbol: action.payload.last_move_symbol,
                 lastMoveRow: parseInt(action.payload.last_move_row),
                 lastMoveCol: parseInt(action.payload.last_move_col),
-                myTurn: 'true' === action.payload.my_turn
+                myTurn: 'true' === action.payload.my_turn,
+                gameStatus: action.payload.game_status,
+                winner: action.payload.winner
             };
 
         case MAKE_A_MOVE:
             return {
                 ...state,
-                myTurn: 'true' === action.payload.my_turn
+                myTurn: 'true' === action.payload.my_turn,
+                gameStatus: action.payload.game_status,
+                winner: action.payload.winner
             };
 
         default:

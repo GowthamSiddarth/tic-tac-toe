@@ -19,13 +19,15 @@ function PlayGame(props) {
         clearInterval(intervalId);
         setIntervalId(null);
 
-        if (props.myTurn) {
+        if ("DETERMINED" === props.gameStatus) {
+            setPlayerTurnNotification(props.winner === props.playerSymbol ? "WINNER" : "LOSER");
+        } else if (props.myTurn) {
             setPlayerTurnNotification("Play Your Turn")
         } else if (props.playerId && props.gameId) {
             setPlayerTurnNotification("Wait for Your Turn");
-            setIntervalId(setInterval(props.isMyTurn, 1500, { playerId: props.playerId, gameId: props.gameId }));
+            setIntervalId(setInterval(props.isMyTurn, 1500, { playerId: props.playerId, gameRoomId: props.gameRoomId, gameId: props.gameId }));
         }
-    }, [props.myTurn]);
+    }, [props.myTurn, props.gameStatus]);
 
     return (
         <Container>
@@ -46,6 +48,8 @@ PlayGame.propTypes = {
     playerSymbol: PropTypes.string.isRequired,
     myTurn: PropTypes.bool.isRequired,
     isMyTurn: PropTypes.func,
+    gameStatus: PropTypes.string,
+    winner: PropTypes.string,
     errorMessage: PropTypes.string
 };
 
@@ -55,6 +59,8 @@ const mapStateToProps = state => ({
     gameId: state.player.gameId,
     playerSymbol: state.player.playerSymbol,
     myTurn: state.player.myTurn,
+    gameStatus: state.player.gameStatus,
+    winner: state.player.winner,
     errorMessage: state.error.errorMessage
 });
 
