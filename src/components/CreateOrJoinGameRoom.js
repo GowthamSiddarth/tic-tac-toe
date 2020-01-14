@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 
 import { Button, Row, Col } from "react-bootstrap";
 
-import { createGameRoom, joinGameRoom } from "../redux/actions/playerActions";
+import { createGameRoom, joinGameRoom, clearErrorMessage } from "../redux/actions/playerActions";
 
 import PromptDialog from "./dialogs/PromptDialog";
 import MessageDialog from "./dialogs/MessageDialog";
@@ -40,6 +40,7 @@ function CreateOrJoinGameRoom(props) {
 
     const dialogOnHide = (setShowDialog, pathToRedirect) => {
         setShowDialog(false);
+        props.clearErrorMessage();
         if (pathToRedirect) props.history.push(pathToRedirect);
     }
 
@@ -113,7 +114,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     createGameRoom: bindActionCreators(createGameRoom, dispatch),
-    joinGameRoom: bindActionCreators(joinGameRoom, dispatch)
+    joinGameRoom: bindActionCreators(joinGameRoom, dispatch),
+    clearErrorMessage: bindActionCreators(clearErrorMessage, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateOrJoinGameRoom));
