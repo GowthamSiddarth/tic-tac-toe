@@ -22,28 +22,24 @@ function Square(props) {
     };
 
     return (
-        <Button block={true} variant="outline-light" size="lg" style={{ height: "68px", width: "68px" }} onClick={onSquareClick}>{buttonText}</Button>
+        <Button variant="outline-light" size="lg" style={{ height: "68px", width: "68px" }} onClick={onSquareClick}>{buttonText}</Button>
     );
 }
 
 function Board(props) {
     return (
         <Container>
-            <Row className="justify-content-md-center no-gutters">
-                <Col md="auto"><Square row={0} col={0} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={0} col={1} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={0} col={2} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
-            </Row>
-            <Row className="justify-content-md-center no-gutters">
-                <Col md="auto"><Square row={1} col={0} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={1} col={1} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={1} col={2} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
-            </Row>
-            <Row className="justify-content-md-center no-gutters">
-                <Col md="auto"><Square row={2} col={0} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={2} col={1} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
-                <Col md="auto"><Square row={2} col={2} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
-            </Row>
+            {
+                Array(3).fill('').map((_rowVal, rowIdx) =>
+                    <Row className="justify-content-md-center no-gutters">
+                        {
+                            Array(3).fill('').map((_colVal, colIdx) =>
+                                <Col md="auto"><Square row={rowIdx} col={colIdx} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
+                            )
+                        }
+                    </Row>
+                )
+            }
         </Container>
     );
 }
@@ -60,6 +56,9 @@ GameBoard.propTypes = {
     gameId: PropTypes.string.isRequired,
     playerSymbol: PropTypes.string.isRequired,
     myTurn: PropTypes.bool.isRequired,
+    lastMoveSymbol: PropTypes.string,
+    lastMoveRow: PropTypes.string,
+    lastMoveCol: PropTypes.string,
     makeAMove: PropTypes.func
 };
 
@@ -68,7 +67,10 @@ const mapStateToProps = state => ({
     gameRoomId: state.player.gameRoomId,
     gameId: state.player.gameId,
     playerSymbol: state.player.playerSymbol,
-    myTurn: state.player.myTurn
+    myTurn: state.player.myTurn,
+    lastMoveSymbol: state.player.lastMoveSymbol,
+    lastMoveRow: state.player.lastMoveRow,
+    lastMoveCol: state.player.lastMoveCol,
 });
 
 const mapDispatchToProps = dispatch => ({

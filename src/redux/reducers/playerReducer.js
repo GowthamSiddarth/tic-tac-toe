@@ -5,7 +5,10 @@ const initState = {
     gameRoomId: undefined,
     gameId: undefined,
     playerSymbol: undefined,
-    myTurn: undefined
+    myTurn: undefined,
+    lastMoveSymbol: undefined,
+    lastMoveRow: undefined,
+    lastMoveCol: undefined
 };
 
 export default function (state = initState, action) {
@@ -32,6 +35,14 @@ export default function (state = initState, action) {
             };
 
         case IS_MY_TURN:
+            return {
+                ...state,
+                lastMoveSymbol: action.payload.last_move_symbol,
+                lastMoveRow: action.payload.last_move_row,
+                lastMoveCol: action.payload.last_move_col,
+                myTurn: 'true' === action.payload.my_turn
+            };
+
         case MAKE_A_MOVE:
             return {
                 ...state,
