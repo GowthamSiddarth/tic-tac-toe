@@ -21,6 +21,8 @@ function PlayGame(props) {
 
         if ("DETERMINED" === props.gameStatus) {
             setPlayerTurnNotification(props.winner === props.playerSymbol ? "WINNER" : "LOSER");
+        } else if ("UNDETERMINED" === props.gameStatus) {
+            setPlayerTurnNotification("DRAW");
         } else if (props.myTurn) {
             setPlayerTurnNotification("Play Your Turn")
         } else if (props.playerId && props.gameId) {
@@ -32,7 +34,7 @@ function PlayGame(props) {
     return (
         <Container>
             <Row>
-                <Col>{playerTurnNotification}</Col>
+                <Col className="my-3">{playerTurnNotification}</Col>
             </Row>
             <Row>
                 <Col><GameBoard /></Col>
