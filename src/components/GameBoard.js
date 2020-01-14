@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 
 import PropTypes from "prop-types";
@@ -12,6 +12,12 @@ import { makeAMove } from "../redux/actions/playerActions";
 
 function Square(props) {
     const [buttonText, setButtonText] = useState('');
+
+    useEffect(() => {
+        if (props.lastMoveSymbol !== props.playerSymbol && props.lastMoveRow === props.row && props.lastMoveCol === props.col) {
+            setButtonText("CIRCLE" === props.lastMoveSymbol ? 'O' : 'X');
+        }
+    }, [props.lastMoveSymbol, props.lastMoveRow, props.lastMoveCol]);
 
     const onSquareClick = (event) => {
         event.preventDefault();
@@ -34,7 +40,20 @@ function Board(props) {
                     <Row className="justify-content-md-center no-gutters">
                         {
                             Array(3).fill('').map((_colVal, colIdx) =>
-                                <Col md="auto"><Square row={rowIdx} col={colIdx} myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} /></Col>
+                                <Col md="auto">
+                                    <Square
+                                        row={rowIdx}
+                                        col={colIdx}
+                                        myTurn={props.myTurn}
+                                        playerSymbol={props.playerSymbol}
+                                        makeAMove={props.makeAMove}
+                                        playerId={props.playerId}
+                                        gameRoomId={props.gameRoomId}
+                                        gameId={props.gameId}
+                                        lastMoveSymbol={props.lastMoveSymbol}
+                                        lastMoveRow={props.lastMoveRow}
+                                        lastMoveCol={props.lastMoveCol} />
+                                </Col>
                             )
                         }
                     </Row>
@@ -46,7 +65,16 @@ function Board(props) {
 
 function GameBoard(props) {
     return (
-        <Board myTurn={props.myTurn} playerSymbol={props.playerSymbol} makeAMove={props.makeAMove} playerId={props.playerId} gameRoomId={props.gameRoomId} gameId={props.gameId} />
+        <Board
+            myTurn={props.myTurn}
+            playerSymbol={props.playerSymbol}
+            makeAMove={props.makeAMove}
+            playerId={props.playerId}
+            gameRoomId={props.gameRoomId}
+            gameId={props.gameId}
+            lastMoveSymbol={props.lastMoveSymbol}
+            lastMoveRow={props.lastMoveRow}
+            lastMoveCol={props.lastMoveCol} />
     );
 }
 
@@ -57,8 +85,8 @@ GameBoard.propTypes = {
     playerSymbol: PropTypes.string.isRequired,
     myTurn: PropTypes.bool.isRequired,
     lastMoveSymbol: PropTypes.string,
-    lastMoveRow: PropTypes.string,
-    lastMoveCol: PropTypes.string,
+    lastMoveRow: PropTypes.number,
+    lastMoveCol: PropTypes.number,
     makeAMove: PropTypes.func
 };
 

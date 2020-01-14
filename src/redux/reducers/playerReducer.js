@@ -38,8 +38,8 @@ export default function (state = initState, action) {
             return {
                 ...state,
                 lastMoveSymbol: action.payload.last_move_symbol,
-                lastMoveRow: action.payload.last_move_row,
-                lastMoveCol: action.payload.last_move_col,
+                lastMoveRow: parseInt(action.payload.last_move_row),
+                lastMoveCol: parseInt(action.payload.last_move_col),
                 myTurn: 'true' === action.payload.my_turn
             };
 
