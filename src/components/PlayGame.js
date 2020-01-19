@@ -20,7 +20,7 @@ function PlayGame(props) {
         setIntervalId(null);
 
         if ("DETERMINED" === props.gameStatus) {
-            setPlayerTurnNotification(props.winner === props.playerSymbol ? "WINNER" : "LOSER");
+            setPlayerTurnNotification(props.winner === props.playerSymbol ? "You WIN" : "You Lose");
         } else if ("UNDETERMINED" === props.gameStatus) {
             setPlayerTurnNotification("DRAW");
         } else if (props.myTurn) {
