@@ -34,10 +34,13 @@ function PlayGame(props) {
     return (
         <Container>
             <Row>
-                <Col className="my-3">{playerTurnNotification}</Col>
+                <Col className="my-4">{playerTurnNotification}</Col>
             </Row>
             <Row>
                 <Col><GameBoard /></Col>
+            </Row>
+            <Row>
+                <Col className="my-4">Your Symbol: {props.playerSymbol}</Col>
             </Row>
         </Container>
     );
