@@ -5,7 +5,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Provider } from "react-redux";
-import store from './redux/store';
+import { store, persistor } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -18,22 +19,24 @@ import PlayGame from "./components/PlayGame";
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
-        <header className="App-header">
-          <Router>
-            <Container>
-              <Row>
-                <Col>
-                  <Route exact path="/" component={Landing} />
-                  <Route exact path="/create-game-room" component={CreateOrJoinGameRoom} />
-                  <Route exact path="/start-new-game" component={StartNewGame} />
-                  <Route exact path="/play-game" component={PlayGame} />
-                </Col>
-              </Row>
-            </Container>
-          </Router>
-        </header>
-      </div>
+      <PersistGate loading={null} persistor={persistor}>
+        <div className="App">
+          <header className="App-header">
+            <Router>
+              <Container>
+                <Row>
+                  <Col>
+                    <Route exact path="/" component={Landing} />
+                    <Route exact path="/create-game-room" component={CreateOrJoinGameRoom} />
+                    <Route exact path="/start-new-game" component={StartNewGame} />
+                    <Route exact path="/play-game" component={PlayGame} />
+                  </Col>
+                </Row>
+              </Container>
+            </Router>
+          </header>
+        </div>
+      </PersistGate>
     </Provider>
   );
 }
