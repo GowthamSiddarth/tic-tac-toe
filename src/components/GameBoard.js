@@ -14,10 +14,8 @@ function Square(props) {
     const [buttonText, setButtonText] = useState('');
 
     useEffect(() => {
-        if (props.lastMoveSymbol !== props.playerSymbol && props.lastMoveRow === props.row && props.lastMoveCol === props.col) {
-            setButtonText("CIRCLE" === props.lastMoveSymbol ? 'O' : 'X');
-        }
-    }, [props.lastMoveSymbol, props.lastMoveRow, props.lastMoveCol]);
+        setButtonText("CIRCLE" === props.grid[props.row][props.col] ? 'O' : 'CROSS' === props.grid[props.row][props.col] ? 'X' : '');
+    }, [props.grid, props.row, props.col]);
 
     const onSquareClick = (event) => {
         event.preventDefault();
@@ -52,7 +50,8 @@ function Board(props) {
                                         gameId={props.gameId}
                                         lastMoveSymbol={props.lastMoveSymbol}
                                         lastMoveRow={props.lastMoveRow}
-                                        lastMoveCol={props.lastMoveCol} />
+                                        lastMoveCol={props.lastMoveCol}
+                                        grid={props.grid} />
                                 </Col>
                             )
                         }
@@ -74,7 +73,8 @@ function GameBoard(props) {
             gameId={props.gameId}
             lastMoveSymbol={props.lastMoveSymbol}
             lastMoveRow={props.lastMoveRow}
-            lastMoveCol={props.lastMoveCol} />
+            lastMoveCol={props.lastMoveCol}
+            grid={props.grid} />
     );
 }
 
@@ -87,7 +87,8 @@ GameBoard.propTypes = {
     lastMoveSymbol: PropTypes.string,
     lastMoveRow: PropTypes.number,
     lastMoveCol: PropTypes.number,
-    makeAMove: PropTypes.func
+    makeAMove: PropTypes.func,
+    grid: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -99,6 +100,7 @@ const mapStateToProps = state => ({
     lastMoveSymbol: state.player.lastMoveSymbol,
     lastMoveRow: state.player.lastMoveRow,
     lastMoveCol: state.player.lastMoveCol,
+    grid: state.player.grid
 });
 
 const mapDispatchToProps = dispatch => ({
