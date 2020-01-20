@@ -67,7 +67,11 @@ export const makeAMove = (reqBody) => dispatch => {
     axios.post('/api/v1/v0/make-a-move', qs.stringify(reqBody))
         .then(resp => dispatch({
             type: MAKE_A_MOVE,
-            payload: resp.data.message
+            payload: resp.data.message,
+            coordinates: {
+                row: reqBody.row,
+                col: reqBody.col
+            }
         }))
         .catch(err => dispatch({
             type: ERROR,
