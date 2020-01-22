@@ -1,2 +1,4 @@
-* persist redux state
+- persist redux state
 * clear error state whenever required
+* clear redux persisted state on close
+* notify other player on quitting game
