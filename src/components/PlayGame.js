@@ -29,6 +29,15 @@ function PlayGame(props) {
             setPlayerTurnNotification("Wait for Your Turn");
             setIntervalId(setInterval(props.isMyTurn, 1500, { playerId: props.playerId, gameRoomId: props.gameRoomId, gameId: props.gameId }));
         }
+
+        const onGameExit = event => {
+            event.preventDefault();
+            localStorage.removeItem('persist:root');
+            return event.returnValue = 'Are you sure about quitting the game?';
+        };
+
+        window.addEventListener('beforeunload', onGameExit);
+        return () => window.removeEventListener('beforeunload', onGameExit);
     }, [props.myTurn, props.gameStatus]);
 
     return (
