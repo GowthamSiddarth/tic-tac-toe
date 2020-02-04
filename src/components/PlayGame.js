@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 
 import { Container, Row, Col } from "react-bootstrap";
 
-import { isMyTurn } from "../redux/actions/playerActions";
+import { isMyTurn, quitGame } from "../redux/actions/playerActions";
 
 import GameBoard from './GameBoard';
 
@@ -32,6 +32,8 @@ function PlayGame(props) {
 
         const onGameExit = event => {
             event.preventDefault();
+            props.quitGame({ playerId: props.playerId, gameId: props.gameId, gameRoomId: props.gameRoomId });
+
             localStorage.removeItem('persist:root');
             return event.returnValue = 'Are you sure about quitting the game?';
         };
@@ -62,6 +64,7 @@ PlayGame.propTypes = {
     playerSymbol: PropTypes.string.isRequired,
     myTurn: PropTypes.bool.isRequired,
     isMyTurn: PropTypes.func,
+    quitGame: PropTypes.func,
     gameStatus: PropTypes.string,
     winner: PropTypes.string,
     errorMessage: PropTypes.string
@@ -79,7 +82,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    isMyTurn: bindActionCreators(isMyTurn, dispatch)
+    isMyTurn: bindActionCreators(isMyTurn, dispatch),
+    quitGame: bindActionCreators(quitGame, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PlayGame));
