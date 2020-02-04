@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from "qs";
 
-import { ERROR, CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME, CLEAR_ERROR_MESSAGE, JOIN_GAME_ROOM, IS_MY_TURN, MAKE_A_MOVE } from "./types";
+import { ERROR, CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME, CLEAR_ERROR_MESSAGE, JOIN_GAME_ROOM, IS_MY_TURN, MAKE_A_MOVE, QUIT_GAME } from "./types";
 
 export const createPlayer = (playerName) => dispatch => {
     axios.get('/api/v1/v0/create-player/' + playerName)
@@ -83,6 +83,18 @@ export const isMyTurn = (reqBody) => dispatch => {
     axios.post('/api/v1/v0/is-my-turn', qs.stringify(reqBody))
         .then(resp => dispatch({
             type: IS_MY_TURN,
+            payload: resp.data.message
+        }))
+        .catch(err => dispatch({
+            type: ERROR,
+            payload: err.response.data.message
+        }));
+}
+
+export const quitGame = (reqBody) => dispatch => {
+    axios.post('/api/v1/v0/quit-game', qs.stringify(reqBody))
+        .then(resp => dispatch({
+            type: QUIT_GAME,
             payload: resp.data.message
         }))
         .catch(err => dispatch({
