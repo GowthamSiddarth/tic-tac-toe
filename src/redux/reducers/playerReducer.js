@@ -1,4 +1,4 @@
-import { CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME, JOIN_GAME_ROOM, MAKE_A_MOVE, IS_MY_TURN } from "../actions/types";
+import { CREATE_PLAYER, CREATE_GAME_ROOM, START_NEW_GAME, JOIN_GAME_ROOM, MAKE_A_MOVE, IS_MY_TURN, QUIT_GAME } from "../actions/types";
 import update from "immutability-helper";
 
 const initState = {
@@ -92,6 +92,7 @@ export default function (state = initState, action) {
                 })
             };
 
+        case QUIT_GAME:
         default:
             return state;
     }
